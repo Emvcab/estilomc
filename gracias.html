@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>¡Pago confirmado! — EstiloMC</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --rosa: #c9847a; --rosa-dark: #a86960; --rosa-light: #f9ede9;
+    --azul: #2c5f8a; --dorado: #c9a96e;
+    --texto: #1e1e2e; --texto-muted: #6b7280;
+    --fondo: #fdf8f6; --blanco: #ffffff; --success: #7aad8c;
+  }
+  body { font-family: 'DM Sans', sans-serif; background: var(--fondo); color: var(--texto); min-height: 100vh; display: flex; flex-direction: column; }
+
+  header {
+    background: linear-gradient(135deg, #1e1e2e 0%, #2d1f3d 50%, #1a2535 100%);
+    padding: 1.25rem 2rem; display: flex; align-items: center; justify-content: center;
+  }
+  .logo { font-family: 'Playfair Display', serif; font-size: 1.4rem; font-weight: 700; color: #fff; }
+  .logo span { color: var(--rosa); }
+
+  main { flex: 1; display: flex; align-items: center; justify-content: center; padding: 2rem 1.5rem; }
+
+  .card {
+    background: var(--blanco); border-radius: 24px; border: 1px solid #ecddd9;
+    padding: 2.5rem 2rem; max-width: 440px; width: 100%; text-align: center;
+    opacity: 0; transform: translateY(30px);
+    animation: fadeUp 0.6s ease 0.2s forwards;
+  }
+  @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
+
+  .check-circle {
+    width: 80px; height: 80px; border-radius: 50%;
+    background: linear-gradient(135deg, #7aad8c, #5a9a70);
+    display: flex; align-items: center; justify-content: center;
+    margin: 0 auto 1.25rem; font-size: 2.2rem;
+    box-shadow: 0 8px 24px rgba(122,173,140,0.35);
+    animation: pop 0.5s ease 0.5s both;
+  }
+  @keyframes pop { 0% { transform: scale(0.5); opacity: 0; } 70% { transform: scale(1.1); } 100% { transform: scale(1); opacity: 1; } }
+
+  h1 { font-family: 'Playfair Display', serif; font-size: 1.7rem; font-weight: 700; margin-bottom: 0.5rem; }
+  .subtitle { color: var(--texto-muted); font-size: 14px; line-height: 1.6; margin-bottom: 1.5rem; }
+
+  .info-box {
+    background: var(--fondo); border-radius: 14px; padding: 1.25rem;
+    margin-bottom: 1.5rem; text-align: left;
+  }
+  .info-row { display: flex; justify-content: space-between; font-size: 13px; margin-bottom: 8px; }
+  .info-row:last-child { margin-bottom: 0; }
+  .info-row span:first-child { color: var(--texto-muted); }
+  .info-row span:last-child { font-weight: 500; color: var(--texto); }
+  .info-row .pagado { color: var(--success); font-weight: 600; }
+
+  .divider { border: none; border-top: 1px solid #ecddd9; margin: 1rem 0; }
+
+  .pasos-title { font-size: 12px; font-weight: 600; color: var(--texto-muted); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 0.75rem; text-align: left; }
+  .paso { display: flex; align-items: flex-start; gap: 10px; margin-bottom: 8px; text-align: left; font-size: 13px; color: var(--texto-muted); }
+  .paso .num { background: var(--rosa); color: white; width: 20px; height: 20px; border-radius: 50%; font-size: 10px; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 1px; }
+
+  .btn-volver {
+    display: block; width: 100%; background: var(--rosa); color: white;
+    border: none; border-radius: 12px; padding: 15px;
+    font-family: 'Playfair Display', serif; font-size: 1rem; font-weight: 700;
+    text-decoration: none; cursor: pointer; margin-top: 1.25rem;
+    transition: background 0.15s, transform 0.12s;
+  }
+  .btn-volver:hover { background: var(--rosa-dark); transform: translateY(-1px); color: white; }
+
+  .loading { color: var(--texto-muted); font-size: 13px; margin-top: 0.75rem; }
+
+  footer { text-align: center; padding: 1.25rem; font-size: 12px; color: var(--texto-muted); }
+  footer span { color: var(--rosa); }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">Estilo<span>MC</span></div>
+</header>
+
+<main>
+  <div class="card">
+    <div class="check-circle">✓</div>
+    <h1>¡Pago confirmado!</h1>
+    <p class="subtitle">Tu turno quedó reservado. Te esperamos con mucho gusto. 💇‍♀️✂️</p>
+
+    <div class="info-box">
+      <div class="info-row"><span>Estado</span><span class="pagado">✓ Pagado</span></div>
+      <div class="info-row"><span>Nombre</span><span id="res-nombre">—</span></div>
+      <div class="info-row"><span>Servicio</span><span id="res-servicio">—</span></div>
+      <div class="info-row"><span>Fecha</span><span id="res-fecha">—</span></div>
+      <div class="info-row"><span>Horario</span><span id="res-horno">—</span></div>
+    </div>
+
+    <hr class="divider">
+
+    <div class="pasos-title">¿Qué sigue ahora?</div>
+    <div class="paso"><span class="num">1</span><span>Recibirás un email de confirmación de Mercado Pago con el comprobante.</span></div>
+    <div class="paso"><span class="num">2</span><span>El día de tu turno presentate 5 minutos antes en el local.</span></div>
+    <div class="paso"><span class="num">3</span><span>Si necesitás cambiar el turno contactanos por WhatsApp.</span></div>
+
+    <div class="loading" id="saving-msg">⏳ Guardando tu reserva...</div>
+
+    <a href="https://emvcab.github.io/estilomc" class="btn-volver">
+      Volver al inicio ✂️
+    </a>
+  </div>
+</main>
+
+<footer>Hecho con ❤️ por <span>EstiloMC</span></footer>
+
+<script>
+  const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycby7Hmmsgyk0HWioYXEb8gUWT6LGlx_hDFcbWlfN5Y3QlKNoS9ww4N6jZOvGN1uEOi47/exec';
+
+  // Leer datos guardados en localStorage por la página principal
+  const reserva = JSON.parse(localStorage.getItem('estilomc_reserva') || '{}');
+
+  // Mostrar datos en pantalla
+  document.getElementById('res-nombre').textContent = reserva.nombre || '—';
+  document.getElementById('res-servicio').textContent = reserva.servicio || '—';
+  document.getElementById('res-fecha').textContent = reserva.fecha || '—';
+  document.getElementById('res-horno').textContent = reserva.turno ? reserva.turno + ' hs' : '—';
+
+  // Guardar en Sheet con estado PAGADO
+  async function guardarPagado() {
+    if (!reserva.nombre) {
+      document.getElementById('saving-msg').textContent = '';
+      return;
+    }
+    try {
+      await fetch(SCRIPT_URL, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          nombre:     reserva.nombre,
+          apellido:   reserva.apellido || '',
+          email:      reserva.email || '',
+          telefono:   reserva.telefono || '',
+          servicio:   reserva.servicio || '',
+          metodoPago: 'Mercado Pago',
+          total:      reserva.total || '',
+          fecha:      reserva.fecha || '',
+          turno:      reserva.turno || '',
+          nota:       reserva.nota || '',
+          estado:     'PAGADO ✓'
+        })
+      });
+      document.getElementById('saving-msg').textContent = '✓ Reserva guardada correctamente';
+      document.getElementById('saving-msg').style.color = '#7aad8c';
+      localStorage.removeItem('estilomc_reserva'); // limpiar
+    } catch(e) {
+      document.getElementById('saving-msg').textContent = '';
+    }
+  }
+
+  guardarPagado();
+</script>
+</body>
+</html>

@@ -400,22 +400,19 @@
     if (!fecha) { showAlert("⚠️ Elegí una fecha"); return false; }
     if (!turnoSeleccionado) { showAlert("⚠️ Elegí un horario"); return false; }
 
-    fetch(SCRIPT_URL, {
-      method: "POST", mode: "no-cors",
-      headers: {"Content-Type": "application/json"},
-      body: JSON.stringify({
-        nombre:    nombre,
-        apellido:  document.getElementById("inp-apellido").value,
-        email:     email,
-        telefono:  document.getElementById("inp-tel").value,
-        servicio:  SERVICIOS[servicioActivo].nombre,
-        metodoPago: "Mercado Pago",
-        total:     SERVICIOS[servicioActivo].precio,
-        fecha:     document.getElementById("res-fecha").textContent,
-        turno:     turnoSeleccionado,
-        nota:      document.getElementById("inp-nota").value
-      })
-    }).catch(()=>{});
+    // Guardar datos en localStorage — se envían al Sheet desde gracias.html SOLO si el pago fue exitoso
+    localStorage.setItem('estilomc_reserva', JSON.stringify({
+      nombre:    nombre,
+      apellido:  document.getElementById("inp-apellido").value,
+      email:     email,
+      telefono:  document.getElementById("inp-tel").value,
+      servicio:  SERVICIOS[servicioActivo].nombre,
+      metodoPago: "Mercado Pago",
+      total:     SERVICIOS[servicioActivo].precio,
+      fecha:     document.getElementById("res-fecha").textContent,
+      turno:     turnoSeleccionado,
+      nota:      document.getElementById("inp-nota").value
+    }));
 
     return true;
   }
