@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cómo reservar — EstiloMC</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --rosa: #c9847a;
+    --rosa-dark: #a86960;
+    --rosa-light: #f9ede9;
+    --azul: #2c5f8a;
+    --dorado: #c9a96e;
+    --texto: #1e1e2e;
+    --texto-muted: #6b7280;
+    --fondo: #fdf8f6;
+    --blanco: #ffffff;
+  }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--fondo);
+    color: var(--texto);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* HEADER */
+  header {
+    background: linear-gradient(135deg, #1e1e2e 0%, #2d1f3d 50%, #1a2535 100%);
+    padding: 2.5rem 2rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  header::before {
+    content: '';
+    position: absolute;
+    top: -80px; right: -80px;
+    width: 300px; height: 300px;
+    background: rgba(201,132,122,0.1);
+    border-radius: 50%;
+  }
+  header::after {
+    content: '';
+    position: absolute;
+    bottom: -100px; left: -60px;
+    width: 250px; height: 250px;
+    background: rgba(44,95,138,0.1);
+    border-radius: 50%;
+  }
+  .header-logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.3rem;
+    color: rgba(255,255,255,0.5);
+    margin-bottom: 0.75rem;
+    position: relative; z-index: 1;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+  .header-logo span { color: var(--rosa); }
+  header h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.8rem, 5vw, 2.8rem);
+    color: #fff;
+    font-weight: 700;
+    margin-bottom: 0.75rem;
+    position: relative; z-index: 1;
+    line-height: 1.2;
+  }
+  header p {
+    color: rgba(255,255,255,0.6);
+    font-size: 15px;
+    position: relative; z-index: 1;
+    max-width: 380px;
+    margin: 0 auto;
+    line-height: 1.6;
+  }
+
+  /* STEPS CONTAINER */
+  .steps {
+    max-width: 480px;
+    margin: 0 auto;
+    padding: 2.5rem 1.5rem 3rem;
+  }
+
+  /* STEP CARD */
+  .step {
+    background: var(--blanco);
+    border-radius: 20px;
+    padding: 1.75rem 1.5rem;
+    margin-bottom: 1rem;
+    display: flex;
+    gap: 1.25rem;
+    align-items: flex-start;
+    border: 1px solid #ecddd9;
+    position: relative;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+    overflow: hidden;
+  }
+  .step.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .step::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 4px;
+    height: 100%;
+    border-radius: 20px 0 0 20px;
+  }
+  .step:nth-child(1)::before { background: var(--rosa); }
+  .step:nth-child(2)::before { background: var(--dorado); }
+  .step:nth-child(3)::before { background: var(--azul); }
+  .step:nth-child(4)::before { background: #7aad8c; }
+
+  /* CONNECTOR LINE */
+  .step-connector {
+    display: flex;
+    justify-content: flex-start;
+    padding-left: 2.85rem;
+    margin-bottom: 1rem;
+    opacity: 0;
+    transition: opacity 0.4s ease 0.3s;
+  }
+  .step-connector.visible { opacity: 1; }
+  .step-connector::before {
+    content: '';
+    width: 2px;
+    height: 24px;
+    background: linear-gradient(to bottom, #ecddd9, transparent);
+    border-radius: 2px;
+  }
+
+  /* STEP NUMBER */
+  .step-num {
+    width: 48px;
+    height: 48px;
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Playfair Display', serif;
+    font-size: 1.3rem;
+    font-weight: 700;
+    flex-shrink: 0;
+    color: white;
+  }
+  .step:nth-child(1) .step-num { background: var(--rosa); }
+  .step:nth-child(2) .step-num { background: var(--dorado); }
+  .step:nth-child(3) .step-num { background: var(--azul); }
+  .step:nth-child(4) .step-num { background: #7aad8c; }
+
+  /* STEP CONTENT */
+  .step-content { flex: 1; }
+  .step-emoji {
+    font-size: 1.75rem;
+    display: block;
+    margin-bottom: 0.4rem;
+  }
+  .step-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin-bottom: 0.4rem;
+    color: var(--texto);
+  }
+  .step-desc {
+    font-size: 13px;
+    color: var(--texto-muted);
+    line-height: 1.6;
+  }
+  .step-desc strong { color: var(--texto); font-weight: 500; }
+
+  /* MINI PREVIEW */
+  .step-preview {
+    margin-top: 0.75rem;
+    background: var(--fondo);
+    border-radius: 10px;
+    padding: 10px 12px;
+    font-size: 12px;
+    color: var(--texto-muted);
+    border: 1px dashed #ddd;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .step-preview .dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    animation: pulse 1.5s infinite;
+  }
+  .step:nth-child(1) .dot { background: var(--rosa); }
+  .step:nth-child(2) .dot { background: var(--dorado); }
+  .step:nth-child(3) .dot { background: var(--azul); }
+  .step:nth-child(4) .dot { background: #7aad8c; }
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.3; }
+  }
+
+  /* CTA */
+  .cta-box {
+    background: linear-gradient(135deg, #1e1e2e 0%, #2d1f3d 100%);
+    border-radius: 20px;
+    padding: 2rem 1.5rem;
+    text-align: center;
+    margin-top: 0.5rem;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.5s ease 0.8s, transform 0.5s ease 0.8s;
+  }
+  .cta-box.visible { opacity: 1; transform: translateY(0); }
+  .cta-box p {
+    color: rgba(255,255,255,0.65);
+    font-size: 13px;
+    margin-bottom: 1rem;
+    line-height: 1.6;
+  }
+  .cta-btn {
+    display: inline-block;
+    background: var(--rosa);
+    color: white;
+    border-radius: 12px;
+    padding: 14px 32px;
+    font-family: 'Playfair Display', serif;
+    font-size: 1rem;
+    font-weight: 700;
+    text-decoration: none;
+    transition: background 0.15s, transform 0.12s;
+  }
+  .cta-btn:hover { background: var(--rosa-dark); transform: translateY(-2px); color: white; }
+
+  /* FOOTER */
+  footer {
+    text-align: center;
+    padding: 1.5rem;
+    font-size: 12px;
+    color: var(--texto-muted);
+  }
+  footer span { color: var(--rosa); }
+
+  /* ANIMACIÓN ENTRADA */
+  .step:nth-child(1) { transition-delay: 0.1s; }
+  .step:nth-child(2) { transition-delay: 0.25s; }
+  .step:nth-child(3) { transition-delay: 0.4s; }
+  .step:nth-child(4) { transition-delay: 0.55s; }
+
+  @media (max-width: 400px) {
+    .step { padding: 1.25rem 1rem; gap: 1rem; }
+    .step-num { width: 40px; height: 40px; font-size: 1.1rem; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-logo">Estilo<span>MC</span></div>
+  <h1>¿Cómo reservar<br><em>tu turno?</em></h1>
+  <p>En menos de 2 minutos podés reservar y pagar tu turno de forma segura.</p>
+</header>
+
+<div class="steps">
+
+  <!-- PASO 1 -->
+  <div class="step">
+    <div class="step-num">1</div>
+    <div class="step-content">
+      <span class="step-emoji">💇‍♀️💈</span>
+      <div class="step-title">Elegí tu servicio</div>
+      <div class="step-desc">
+        Seleccioná si querés un <strong>corte de dama</strong> ($30.000) o <strong>corte de caballero</strong> ($26.000). Hacé clic en la tarjeta del servicio.
+      </div>
+      <div class="step-preview">
+        <span class="dot"></span>
+        Tocá la tarjeta del servicio que querés
+      </div>
+    </div>
+  </div>
+
+  <div class="step-connector"><br></div>
+
+  <!-- PASO 2 -->
+  <div class="step">
+    <div class="step-num">2</div>
+    <div class="step-content">
+      <span class="step-emoji">📝</span>
+      <div class="step-title">Completá tus datos</div>
+      <div class="step-desc">
+        Ingresá tu <strong>nombre</strong>, <strong>email</strong> y <strong>teléfono</strong>. Si tenés alguna preferencia (largo, estilo, degradé) podés anotarla en el campo de aclaraciones.
+      </div>
+      <div class="step-preview">
+        <span class="dot"></span>
+        Email válido requerido para confirmar la reserva
+      </div>
+    </div>
+  </div>
+
+  <div class="step-connector"><br></div>
+
+  <!-- PASO 3 -->
+  <div class="step">
+    <div class="step-num">3</div>
+    <div class="step-content">
+      <span class="step-emoji">📅</span>
+      <div class="step-title">Elegí fecha y horario</div>
+      <div class="step-desc">
+        Seleccioná el <strong>día</strong> que más te convenga y luego el <strong>horario disponible</strong>. Los horarios en gris ya están ocupados.
+      </div>
+      <div class="step-preview">
+        <span class="dot"></span>
+        Horarios disponibles: 9:00 · 10:00 · 12:00 · 14:00 · 16:00 · 17:00
+      </div>
+    </div>
+  </div>
+
+  <div class="step-connector"><br></div>
+
+  <!-- PASO 4 -->
+  <div class="step">
+    <div class="step-num">4</div>
+    <div class="step-content">
+      <span class="step-emoji">💙</span>
+      <div class="step-title">Pagá con Mercado Pago</div>
+      <div class="step-desc">
+        Hacé clic en <strong>"Confirmar y pagar"</strong> — vas a ser redirigido al sitio oficial de Mercado Pago donde podés pagar con tarjeta de crédito, débito, billetera MP o efectivo en Pago Fácil.
+      </div>
+      <div class="step-preview">
+        <span class="dot"></span>
+        Pago 100% seguro · SSL encriptado
+      </div>
+    </div>
+  </div>
+
+  <!-- CTA -->
+  <div class="cta-box">
+    <p>¿Listo para reservar? Entrá a nuestra página y agendá tu turno ahora.</p>
+    <a href="https://emvcab.github.io/estilomc" class="cta-btn">
+      Reservar mi turno ✂️
+    </a>
+  </div>
+
+</div>
+
+<footer>
+  Hecho con ❤️ por <span>EstiloMC</span>
+</footer>
+
+<script>
+  // Animate on load
+  window.addEventListener('load', () => {
+    setTimeout(() => {
+      document.querySelectorAll('.step, .step-connector, .cta-box').forEach(el => {
+        el.classList.add('visible');
+      });
+    }, 200);
+  });
+</script>
+</body>
+</html>
