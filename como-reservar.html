@@ -115,10 +115,10 @@
     height: 100%;
     border-radius: 20px 0 0 20px;
   }
-  .step:nth-child(1)::before { background: var(--rosa); }
-  .step:nth-child(2)::before { background: var(--dorado); }
-  .step:nth-child(3)::before { background: var(--azul); }
-  .step:nth-child(4)::before { background: #7aad8c; }
+  .step.s1::before { background: var(--rosa); }
+  .step.s2::before { background: var(--dorado); }
+  .step.s3::before { background: var(--azul); }
+  .step.s4::before { background: #7aad8c; }
 
   /* CONNECTOR LINE */
   .step-connector {
@@ -152,10 +152,10 @@
     flex-shrink: 0;
     color: white;
   }
-  .step:nth-child(1) .step-num { background: var(--rosa); }
-  .step:nth-child(2) .step-num { background: var(--dorado); }
-  .step:nth-child(3) .step-num { background: var(--azul); }
-  .step:nth-child(4) .step-num { background: #7aad8c; }
+  .step.s1 .step-num { background: var(--rosa); }
+  .step.s2 .step-num { background: var(--dorado); }
+  .step.s3 .step-num { background: var(--azul); }
+  .step.s4 .step-num { background: #7aad8c; }
 
   /* STEP CONTENT */
   .step-content { flex: 1; }
@@ -197,10 +197,10 @@
     flex-shrink: 0;
     animation: pulse 1.5s infinite;
   }
-  .step:nth-child(1) .dot { background: var(--rosa); }
-  .step:nth-child(2) .dot { background: var(--dorado); }
-  .step:nth-child(3) .dot { background: var(--azul); }
-  .step:nth-child(4) .dot { background: #7aad8c; }
+  .step.s1 .dot { background: var(--rosa); }
+  .step.s2 .dot { background: var(--dorado); }
+  .step.s3 .dot { background: var(--azul); }
+  .step.s4 .dot { background: #7aad8c; }
   @keyframes pulse {
     0%, 100% { opacity: 1; }
     50% { opacity: 0.3; }
@@ -248,10 +248,10 @@
   footer span { color: var(--rosa); }
 
   /* ANIMACIÓN ENTRADA */
-  .step:nth-child(1) { transition-delay: 0.1s; }
-  .step:nth-child(2) { transition-delay: 0.25s; }
-  .step:nth-child(3) { transition-delay: 0.4s; }
-  .step:nth-child(4) { transition-delay: 0.55s; }
+  .step.s1 { transition-delay: 0.1s; }
+  .step.s2 { transition-delay: 0.25s; }
+  .step.s3 { transition-delay: 0.4s; }
+  .step.s4 { transition-delay: 0.55s; }
 
   @media (max-width: 400px) {
     .step { padding: 1.25rem 1rem; gap: 1rem; }
@@ -270,7 +270,7 @@
 <div class="steps">
 
   <!-- PASO 1 -->
-  <div class="step">
+  <div class="step s1">
     <div class="step-num">1</div>
     <div class="step-content">
       <span class="step-emoji">💇‍♀️💈</span>
@@ -288,7 +288,7 @@
   <div class="step-connector"><br></div>
 
   <!-- PASO 2 -->
-  <div class="step">
+  <div class="step s2">
     <div class="step-num">2</div>
     <div class="step-content">
       <span class="step-emoji">📝</span>
@@ -306,7 +306,7 @@
   <div class="step-connector"><br></div>
 
   <!-- PASO 3 -->
-  <div class="step">
+  <div class="step s3">
     <div class="step-num">3</div>
     <div class="step-content">
       <span class="step-emoji">📅</span>
@@ -324,7 +324,7 @@
   <div class="step-connector"><br></div>
 
   <!-- PASO 4 -->
-  <div class="step">
+  <div class="step s4">
     <div class="step-num">4</div>
     <div class="step-content">
       <span class="step-emoji">💙</span>
